@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rishab Mantri — Senior Software Engineer</title>
+<meta name="description" content="Senior software engineer at Amazon building distributed systems, search, and data platforms at marketplace scale." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS — "engineering spec sheet": monospace coordinate
+     labels, a faint blueprint grid, one cobalt accent. Light + dark.
+     Retheme everything by editing the values below.
+     ============================================================ */
+  :root {
+    --bg:#FBFBF9; --bg-tint:#F2F3EF; --ink:#15171C; --muted:#5B6069; --faint:#9AA0A8;
+    --line:#E4E4DE; --accent:#2D4EF5; --accent-ink:#1B36C9; --accent-wash:#ECEFFE;
+    --card:#FFFFFF; --shadow:0 1px 2px rgba(21,23,28,.04), 0 8px 24px rgba(21,23,28,.05);
+    --maxw:1100px; --gut:clamp(20px,5vw,64px);
+    --f-display:"Space Grotesk", system-ui, sans-serif;
+    --f-body:"IBM Plex Sans", system-ui, sans-serif;
+    --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+  }
+  html[data-theme="dark"] {
+    --bg:#0E0F13; --bg-tint:#15171C; --ink:#ECEDEF; --muted:#A6ABB4; --faint:#6B7079;
+    --line:#24262D; --accent:#7C8CFF; --accent-ink:#9AA6FF; --accent-wash:#191C2E;
+    --card:#15171C; --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *,*::before,*::after { box-sizing:border-box; }
+  html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  body {
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--f-body);
+    font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility; overflow-x:hidden;
+  }
+  body::before {
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px; opacity:.35;
+    mask-image:radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+    -webkit-mask-image:radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+  }
+  a { color:inherit; }
+  img { max-width:100%; display:block; }
+  ::selection { background:var(--accent); color:#fff; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 var(--gut); position:relative; z-index:1; }
+
+  h1,h2,h3 { font-family:var(--f-display); font-weight:600; letter-spacing:-0.02em; line-height:1.05; margin:0; }
+  .eyebrow {
+    font-family:var(--f-mono); font-size:12.5px; font-weight:500; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--accent-ink); display:inline-flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before { content:""; width:22px; height:1px; background:var(--accent); display:inline-block; }
+
+  /* TOP BAR + NAV */
+  .topbar {
+    position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand { font-family:var(--f-mono); font-size:13px; font-weight:500; letter-spacing:.02em; text-decoration:none; }
+  .brand b { color:var(--accent-ink); }
+  nav.links { display:flex; gap:28px; align-items:center; }
+  nav.links a {
+    font-family:var(--f-mono); font-size:13px; text-decoration:none; color:var(--muted);
+    position:relative; padding:4px 0; transition:color .2s;
+  }
+  nav.links a::after {
+    content:""; position:absolute; left:0; bottom:-1px; height:2px; width:0;
+    background:var(--accent); transition:width .25s ease;
+  }
+  nav.links a:hover, nav.links a.active { color:var(--ink); }
+  nav.links a.active::after, nav.links a:hover::after { width:100%; }
+  .topbar-tools { display:flex; align-items:center; gap:14px; }
+  .icon-btn {
+    appearance:none; border:1px solid var(--line); background:var(--card); color:var(--ink);
+    width:36px; height:36px; border-radius:8px; cursor:pointer; display:grid; place-items:center;
+    transition:border-color .2s, transform .1s;
+  }
+  .icon-btn:hover { border-color:var(--accent); }
+  .icon-btn:active { transform:scale(.94); }
+  .icon-btn svg { width:17px; height:17px; }
+  .sun { display:none; } html[data-theme="dark"] .sun { display:block; }
+  html[data-theme="dark"] .moon { display:none; }
+  .menu-btn { display:none; }
+
+  /* HERO */
+  .hero { padding:clamp(56px,11vw,128px) 0 clamp(40px,7vw,80px); }
+  .hero .status {
+    font-family:var(--f-mono); font-size:12.5px; color:var(--faint);
+    display:flex; flex-wrap:wrap; gap:16px; margin-bottom:28px;
+  }
+  .hero .status .dot { color:var(--accent-ink); }
+  .hero .status .dot::before { content:"●"; font-size:9px; margin-right:6px; color:#20b26a; vertical-align:middle; }
+  .hero h1 { font-size:clamp(44px,9vw,96px); font-weight:700; letter-spacing:-0.035em; margin:0 0 18px; }
+  .hero h1 .accent { color:var(--accent); }
+  .hero .lede { font-size:clamp(18px,2.4vw,23px); color:var(--muted); max-width:56ch; margin:0 0 36px; line-height:1.5; }
+  .cta-row { display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+  .btn {
+    font-family:var(--f-mono); font-size:14px; text-decoration:none; padding:13px 22px; border-radius:10px;
+    display:inline-flex; align-items:center; gap:9px; transition:transform .12s, background .2s, border-color .2s, color .2s;
+  }
+  .btn:active { transform:translateY(1px); }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:var(--accent-ink); }
+  .btn-ghost { background:transparent; color:var(--ink); border:1px solid var(--line); }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent-ink); }
+  .metrics {
+    margin-top:clamp(44px,7vw,76px); display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  }
+  .metric { background:var(--card); padding:26px 24px; }
+  .metric .num { font-family:var(--f-display); font-weight:600; font-size:clamp(32px,5vw,46px); letter-spacing:-0.03em; color:var(--ink); line-height:1; }
+  .metric .num span { color:var(--accent); }
+  .metric .label { font-family:var(--f-mono); font-size:12.5px; color:var(--muted); margin-top:12px; line-height:1.4; }
+
+  /* SECTION SHELL */
+  section.block { padding:clamp(60px,9vw,110px) 0; border-top:1px solid var(--line); }
+  .section-head { margin-bottom:clamp(34px,5vw,54px); }
+  .section-head h2 { font-size:clamp(28px,4.5vw,42px); margin-top:14px; }
+
+  /* ABOUT */
+  .about-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:clamp(28px,5vw,64px); align-items:start; }
+  .about-grid p { color:var(--muted); margin:0 0 18px; max-width:60ch; }
+  .about-grid p strong { color:var(--ink); font-weight:600; }
+  .headshot {
+    border:1px solid var(--line); border-radius:14px; aspect-ratio:4/5; background:var(--bg-tint);
+    display:grid; place-items:center; font-family:var(--f-mono); font-size:12px; color:var(--faint);
+    text-align:center; padding:20px; overflow:hidden;
+  }
+  .factsheet { margin-top:8px; border-top:1px solid var(--line); }
+  .factsheet div {
+    display:flex; justify-content:space-between; gap:16px; padding:13px 0;
+    border-bottom:1px solid var(--line); font-family:var(--f-mono); font-size:13.5px;
+  }
+  .factsheet div span:first-child { color:var(--faint); }
+  .factsheet div span:last-child { color:var(--ink); text-align:right; }
+
+  /* IMPACT */
+  .impact-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .impact {
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:26px 26px 24px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+  }
+  .impact::before {
+    content:attr(data-idx); position:absolute; top:18px; right:22px;
+    font-family:var(--f-mono); font-size:12px; color:var(--faint);
+  }
+  .impact .big { font-family:var(--f-display); font-weight:600; font-size:clamp(28px,4vw,38px); letter-spacing:-0.03em; color:var(--accent); line-height:1; margin-bottom:14px; }
+  .impact h3 { font-size:19px; margin-bottom:8px; }
+  .impact p { color:var(--muted); margin:0; font-size:15.5px; }
+
+  /* EXPERIENCE */
+  .timeline { display:grid; gap:0; }
+  .role { display:grid; grid-template-columns:150px 1fr; gap:clamp(20px,4vw,48px); padding:30px 0; border-top:1px solid var(--line); }
+  .role:first-child { border-top:none; }
+  .role .when { font-family:var(--f-mono); font-size:13px; color:var(--faint); }
+  .role .when .n { color:var(--accent-ink); display:block; margin-bottom:6px; }
+  .role h3 { font-size:22px; margin-bottom:4px; }
+  .role .org { font-family:var(--f-mono); font-size:14px; color:var(--accent-ink); margin-bottom:14px; }
+  .role ul { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+  .role li { position:relative; padding-left:22px; color:var(--muted); font-size:15.5px; }
+  .role li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-family:var(--f-mono); }
+  .role li strong { color:var(--ink); font-weight:600; }
+  .edu { font-family:var(--f-mono); font-size:13.5px; color:var(--muted); padding-top:26px; border-top:1px solid var(--line); margin-top:8px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .edu b { color:var(--ink); font-weight:600; }
+
+  /* SKILLS */
+  .skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .skillcat { border:1px solid var(--line); border-radius:14px; padding:24px; background:var(--card); }
+  .skillcat h3 { font-family:var(--f-mono); font-size:13px; font-weight:500; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-ink); margin-bottom:16px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { font-family:var(--f-mono); font-size:13px; color:var(--ink); border:1px solid var(--line); background:var(--bg-tint); padding:6px 11px; border-radius:7px; }
+
+  /* PROJECTS */
+  .proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .proj { display:block; text-decoration:none; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px; transition:border-color .2s, transform .15s; box-shadow:var(--shadow); }
+  .proj:hover { border-color:var(--accent); transform:translateY(-3px); }
+  .proj .top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; }
+  .proj h3 { font-size:21px; }
+  .proj .arrow { font-family:var(--f-mono); color:var(--accent); font-size:18px; }
+  .proj p { color:var(--muted); font-size:15.5px; margin:0 0 16px; }
+  .proj .stack { display:flex; flex-wrap:wrap; gap:7px; }
+  .proj .stack span { font-family:var(--f-mono); font-size:12px; color:var(--faint); }
+  .proj .stack span::after { content:"·"; margin-left:7px; color:var(--line); }
+  .proj .stack span:last-child::after { content:""; }
+
+  /* CONTACT */
+  .contact { text-align:center; }
+  .contact h2 { font-size:clamp(32px,6vw,58px); margin:14px 0 22px; }
+  .contact p { color:var(--muted); max-width:48ch; margin:0 auto 34px; }
+  .email-row { display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .copy-btn { font-family:var(--f-mono); font-size:13px; cursor:pointer; border:1px solid var(--line); background:var(--card); color:var(--muted); padding:9px 14px; border-radius:9px; transition:border-color .2s, color .2s; }
+  .copy-btn:hover { border-color:var(--accent); color:var(--accent-ink); }
+  .socials { display:flex; gap:18px; justify-content:center; margin-top:34px; flex-wrap:wrap; }
+  .socials a { font-family:var(--f-mono); font-size:14px; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .socials a:hover { color:var(--accent-ink); }
+
+  /* FOOTER */
+  footer { border-top:1px solid var(--line); padding:30px 0 50px; }
+  footer .wrap { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--f-mono); font-size:12.5px; color:var(--faint); }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+
+  a:focus-visible, button:focus-visible, .btn:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
+  /* RESPONSIVE */
+  @media (max-width:820px) {
+    .menu-btn { display:grid; }
+    nav.links {
+      position:fixed; inset:60px 0 auto 0; flex-direction:column; gap:0; align-items:stretch;
+      background:var(--bg); border-bottom:1px solid var(--line); transform:translateY(-130%);
+      transition:transform .28s ease; padding:6px 0;
+    }
+    nav.links.open { transform:none; }
+    nav.links a { padding:14px var(--gut); border-top:1px solid var(--line); }
+    nav.links a:first-child { border-top:none; }
+    nav.links a::after { display:none; }
+    .metrics { grid-template-columns:1fr; }
+    .about-grid { grid-template-columns:1fr; }
+    .headshot { max-width:320px; }
+    .impact-grid, .skills-grid, .proj-grid { grid-template-columns:1fr; }
+    .role { grid-template-columns:1fr; gap:14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ TOP BAR ============================ -->
+<header class="topbar">
+  <div class="wrap">
+    <a href="#top" class="brand"><b>RM</b>&nbsp;Rishab Mantri</a>
+    <nav class="links" id="nav">
+      <a href="#about">about</a>
+      <a href="#impact">impact</a>
+      <a href="#experience">experience</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div class="topbar-tools">
+      <button class="icon-btn" id="theme" aria-label="Toggle dark mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menu" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="status reveal">
+        <span class="dot">Open to senior engineering roles</span>
+        <span>Seattle, WA</span>
+      </div>
+      <h1 class="reveal">Rishab <span class="accent">Mantri</span></h1>
+      <p class="lede reveal">Senior software engineer focused on backend systems, search, and scale — I build services that stay fast and trustworthy as a $7.2B marketplace grows.</p>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary" href="#contact">Get in touch
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <!-- [PLACEHOLDER: link to your résumé PDF, e.g. ./resume.pdf] -->
+        <a class="btn btn-ghost" href="[PLACEHOLDER: resume.pdf URL]" target="_blank" rel="noopener">Download résumé</a>
+      </div>
+      <div class="metrics reveal">
+        <div class="metric">
+          <div class="num"><span>$7.2B</span></div>
+          <div class="label">GMS marketplace data platform I re-architected</div>
+        </div>
+        <div class="metric">
+          <div class="num"><span>200K</span>/day</div>
+          <div class="label">Accounts screened by abuse-detection systems I built</div>
+        </div>
+        <div class="metric">
+          <div class="num"><span>67%</span></div>
+          <div class="label">Latency cut on the Elasticsearch ingestion pipeline</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ABOUT ============================ -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">§01 — About</span>
+        <h2>The short version</h2>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p>I'm a software engineer at Amazon in Seattle with <strong>6+ years</strong> building distributed systems, data platforms, and search infrastructure that operate at marketplace scale. I own the backend behind a <strong>$7.2B GMS marketplace</strong> and the real-time pipelines that keep it fast and trustworthy.</p>
+          <p>My work runs from deep systems — Elasticsearch ranking, async ingestion, abuse detection at 200K accounts a day — to shipping production GenAI features on AWS Bedrock. I'm just as comfortable running a six-team launch as I am tuning a query.</p>
+          <p>I'm exploring senior engineering roles where backend depth and cross-team ownership are the job. The fastest way to reach me is email.</p>
+        </div>
+        <div class="reveal">
+          <div class="headshot">
+            <!-- Replace with: <img src="[PLACEHOLDER: headshot.jpg]" alt="Rishab Mantri" style="width:100%;height:100%;object-fit:cover" /> -->
+            [PLACEHOLDER: headshot photo]
+          </div>
+          <div class="factsheet">
+            <div><span>Role</span><span>Software Engineer II, Amazon</span></div>
+            <div><span>Based in</span><span>Seattle, WA</span></div>
+            <div><span>Experience</span><span>6+ years</span></div>
+            <div><span>Focus</span><span>Backend · Distributed systems</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ IMPACT ============================ -->
+  <section class="block" id="impact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">§02 — Impact</span>
+        <h2>Selected outcomes, by the numbers</h2>
+      </div>
+      <div class="impact-grid">
+        <div class="impact reveal" data-idx="01">
+          <div class="big">$7.2B</div>
+          <h3>Re-architected the marketplace data layer</h3>
+          <p>Split a monolithic API into decoupled merchant- and brand-level endpoints for 900+ brands, unlocking access regardless of portfolio size.</p>
+        </div>
+        <div class="impact reveal" data-idx="02">
+          <div class="big">200K/day</div>
+          <h3>Built high-throughput abuse detection</h3>
+          <p>Step Functions + Lambda pipeline auto-actioning duplicate, LLM-generated, and high-cancellation reviews — replacing manual moderation.</p>
+        </div>
+        <div class="impact reveal" data-idx="03">
+          <div class="big">67%</div>
+          <h3>Cut Elasticsearch ingestion latency</h3>
+          <p>Refactored the Lambda → S3 → ES sync from 9 hours to 3, directly improving seller data freshness.</p>
+        </div>
+        <div class="impact reveal" data-idx="04">
+          <div class="big">+27%</div>
+          <h3>Lifted cold-start product claim rate</h3>
+          <p>Solo-designed a configurable Elasticsearch ranking architecture for new (≤90-day) products, decoupled from hard-coded logic.</p>
+        </div>
+        <div class="impact reveal" data-idx="05">
+          <div class="big">80.5%</div>
+          <h3>Resolved a P0 order-failure crisis</h3>
+          <p>Diagnosed and fixed a cross-border failure spike — error rate fell from ~60% to 15% within weeks.</p>
+        </div>
+        <div class="impact reveal" data-idx="06">
+          <div class="big">25K / 40K</div>
+          <h3>Drove international expansion</h3>
+          <p>Sole technical advisor across India, Brazil, and Mexico — onboarded 8 engineers; enrollments and orders in the first two months.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ EXPERIENCE ============================ -->
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">§03 — Experience</span>
+        <h2>Where I've worked</h2>
+      </div>
+      <div class="timeline">
+        <article class="role reveal">
+          <div class="when">
+            <span class="n">01</span>
+            Dec 2022 – Present
+          </div>
+          <div>
+            <h3>Software Engineer II</h3>
+            <div class="org">Amazon · Selling Partner Experience · Seattle, WA</div>
+            <ul>
+              <li><strong>Re-architected the $7.2B TTM GMS data layer</strong> for 900+ brands — split a monolithic API into decoupled merchant- and brand-level endpoints and led the cross-team design reviews.</li>
+              <li><strong>Tech-led a Pre-Release launch across 6 independent teams</strong> as lead of a 5-engineer team — cut time-to-first-review from 39 to 11 days, with 51% of ~16.5K enrolled products getting day-one reviews, shipped two months ahead of deadline.</li>
+              <li><strong>Built an abuse-detection system processing 200K accounts/day</strong> (Step Functions + Lambda) — zero-touch enforcement against duplicate, LLM-generated, and high-cancellation reviews.</li>
+              <li><strong>Designed a configurable recommendation priority-scoring architecture</strong> on Elasticsearch — lifted cold-start product claim rate 27% without coupling to existing logic.</li>
+              <li><strong>Cut Elasticsearch ingestion latency 67%</strong> (9h → 3h) and eliminated ~1,500 illegal order cancellations/month.</li>
+              <li><strong>Shipped production GenAI on AWS Bedrock</strong> — a feedback analyzer auto-generating structured Slack digests from team feedback.</li>
+              <li><strong>Drove $80K+ annualized cost savings</strong> as team cost champion; led design reviews and mentored 2 junior SDEs.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="role reveal">
+          <div class="when">
+            <span class="n">02</span>
+            Sep 2020 – Nov 2022
+          </div>
+          <div>
+            <h3>Software Engineer I</h3>
+            <div class="org">Amazon · Brand Tools &amp; Seller Central · Seattle, WA</div>
+            <ul>
+              <li><strong>Unified Brand Catalog Manager and CX Metrics</strong> into a single Seller Central tab — improved access for 1,200+ Retail Managed Brands and saved ~$50K/year in operational overhead.</li>
+              <li>Built and maintained core Brand Dashboard features tracking price competitiveness, in-stock rate, and selection coverage — used daily by brand managers across Amazon.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <!-- Verify the degree designation (B.E. vs B.Tech) before publishing. -->
+      <div class="edu reveal">
+        <span><b>B.E., Computer Science</b> · Shri Ramdeobaba College of Engineering, Nagpur</span>
+        <span>May 2013 – May 2017</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SKILLS ============================ -->
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">§04 — Toolkit</span>
+        <h2>Skills &amp; tools</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skillcat reveal">
+          <h3>Languages &amp; Backend</h3>
+          <div class="chips">
+            <span class="chip">Java</span>
+            <span class="chip">Spring Boot</span>
+            <span class="chip">Microservices</span>
+            <span class="chip">Distributed systems</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">SQL</span>
+          </div>
+        </div>
+        <div class="skillcat reveal">
+          <h3>AWS &amp; Infrastructure</h3>
+          <div class="chips">
+            <span class="chip">AWS Lambda</span>
+            <span class="chip">Bedrock</span>
+            <span class="chip">S3</span>
+            <span class="chip">DynamoDB</span>
+            <span class="chip">SQS</span>
+            <span class="chip">Step Functions</span>
+            <span class="chip">EC2</span>
+            <span class="chip">Elasticsearch</span>
+          </div>
+        </div>
+        <div class="skillcat reveal">
+          <h3>Domains &amp; Practices</h3>
+          <div class="chips">
+            <span class="chip">GenAI / Agentic AI</span>
+            <span class="chip">Search &amp; ranking</span>
+            <span class="chip">System design</span>
+            <span class="chip">Async pipelines</span>
+            <span class="chip">Cost optimization</span>
+            <span class="chip">Cross-team leadership</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROJECTS ============================ -->
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">§05 — Selected work</span>
+        <h2>Projects</h2>
+      </div>
+      <div class="proj-grid">
+        <!-- Add live/repo links where you have them; placeholders left otherwise. -->
+        <a class="proj reveal" href="[PLACEHOLDER: project link]" target="_blank" rel="noopener">
+          <div class="top"><h3>Recommendation Priority Scoring</h3><span class="arrow">↗</span></div>
+          <p>A configurable Elasticsearch ranking layer that surfaced cold-start products without coupling to existing logic — lifted claim rates 27% and stayed reusable across future programs.</p>
+          <div class="stack"><span>Java</span><span>Elasticsearch</span><span>AWS</span></div>
+        </a>
+        <a class="proj reveal" href="[PLACEHOLDER: project link]" target="_blank" rel="noopener">
+          <div class="top"><h3>GenAI Feedback Analyzer</h3><span class="arrow">↗</span></div>
+          <p>A production GenAI service on AWS Bedrock that summarizes recurring team feedback into structured Slack digests, replacing hours of manual triage.</p>
+          <div class="stack"><span>AWS Bedrock</span><span>Lambda</span><span>GenAI</span></div>
+        </a>
+        <a class="proj reveal" href="[PLACEHOLDER: project link]" target="_blank" rel="noopener">
+          <div class="top"><h3>Seller Research Survey (0 → 1)</h3><span class="arrow">↗</span></div>
+          <p>Incubated a seller-research product from scratch as the sole engineer; earned enough validation that it now has a dedicated 8-person team scaling it.</p>
+          <div class="stack"><span>0→1</span><span>Full-stack</span><span>AWS</span></div>
+        </a>
+        <a class="proj reveal" href="[PLACEHOLDER: project link]" target="_blank" rel="noopener">
+          <div class="top"><h3>Agentic AI / MCP</h3><span class="arrow">↗</span></div>
+          <p>An MCP-based agentic project taken to full-scale beta — substantiating real, current agentic-AI experience beyond prototypes.</p>
+          <div class="stack"><span>MCP</span><span>Agentic AI</span><span>AWS Bedrock</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow reveal" style="justify-content:center; display:inline-flex">§06 — Contact</span>
+      <h2 class="reveal">Let's talk.</h2>
+      <p class="reveal">I'm open to senior engineering roles where backend depth and cross-team ownership matter. Email is the fastest way to reach me.</p>
+      <div class="email-row reveal">
+        <a class="btn btn-primary" href="mailto:rishab.mantri@gmail.com">rishab.mantri@gmail.com</a>
+        <button class="copy-btn" id="copyEmail" data-email="rishab.mantri@gmail.com">copy</button>
+      </div>
+      <div class="socials reveal">
+        <!-- [PLACEHOLDER: your LinkedIn / GitHub URLs] -->
+        <a href="[PLACEHOLDER: LinkedIn URL]" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="[PLACEHOLDER: GitHub URL]" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Rishab Mantri</span>
+    <span>Built with HTML, CSS &amp; a little JS · Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // theme toggle (persists; guarded so it never throws)
+  (function () {
+    var root = document.documentElement, saved;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved) root.setAttribute('data-theme', saved);
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) root.setAttribute('data-theme', 'dark');
+    document.getElementById('theme').addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+
+  // mobile menu
+  (function () {
+    var btn = document.getElementById('menu'), nav = document.getElementById('nav');
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', open);
+    });
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); });
+    });
+  })();
+
+  // active nav link on scroll
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('#nav a')), map = {};
+    links.forEach(function (a) { var sec = document.getElementById(a.getAttribute('href').slice(1)); if (sec) map[sec.id] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { links.forEach(function (l) { l.classList.remove('active'); }); if (map[e.target.id]) map[e.target.id].classList.add('active'); }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(map).forEach(function (id) { obs.observe(document.getElementById(id)); });
+  })();
+
+  // scroll reveal (respects reduced motion)
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, els = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var obs = new IntersectionObserver(function (entries, o) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { obs.observe(el); });
+  })();
+
+  // copy email
+  (function () {
+    var btn = document.getElementById('copyEmail'); if (!btn) return;
+    btn.addEventListener('click', function () {
+      var email = btn.getAttribute('data-email');
+      var done = function () { btn.textContent = 'copied'; setTimeout(function(){ btn.textContent = 'copy'; }, 1600); };
+      if (navigator.clipboard) { navigator.clipboard.writeText(email).then(done).catch(done); } else { done(); }
+    });
+  })();
+</script>
+</body>
+</html>
